@@ -2,7 +2,9 @@
 const searchPhone = () => {
     const searchField = document.getElementById('search-field');
     const searchText = searchField.value;
+    //clear search field
     searchField.value = '';
+    //load data
     const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
     fetch(url)
         .then(res => res.json())
@@ -12,6 +14,7 @@ const searchPhone = () => {
 // display phone search results
 const displaySearchResult = phones => {
     const searchResult = document.getElementById('search-result');
+    searchResult.textContent = '';
     phones.forEach(phone => {
         const div = document.createElement('div');
         div.classList.add('col');
@@ -40,6 +43,7 @@ const loadPhoneDetail = phoneId => {
 const displayPhoneDetail = phone => {
     console.log(phone);
     const phoneDetails = document.getElementById('phone-details');
+    phoneDetails.textContent = '';
     const div = document.createElement('div');
     div.classList.add('card');
     div.innerHTML = `
@@ -47,8 +51,14 @@ const displayPhoneDetail = phone => {
         <div class="card-body">
             <h5 class="card-title">${phone.name}</h5>
             <h6>${phone.brand}</h6>
-            
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <p>${phone.releaseDate}</p>
+            <h6>Main Features</h6>
+            <li>Chip Set: ${phone.mainFeatures.chipSet}</li>            
+            <li>Display Size: ${phone.mainFeatures.displaySize}</li>            
+            <li>Memory: ${phone.mainFeatures.memory}</li>
+            <li>Storage: ${phone.mainFeatures.storage}</li>
+            <li>Sensors: ${phone.mainFeatures.sensors}</li>
+
         </div>
     `;
     phoneDetails.appendChild(div);
