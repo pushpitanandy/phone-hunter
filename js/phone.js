@@ -21,9 +21,22 @@ const displaySearchResult = phones => {
             <div class="card-body">
                 <h5 class="card-title">${phone.phone_name}</h5>
                 <h6>${phone.brand}</h6>
-                <button class="bg-success text-white p-2">Show Details</button>
+                <button onclick="loadPhoneDetail('${phone.slug}')" class="bg-success text-white p-2">Show Details</button>
             </div>
         </div>`;
         searchResult.appendChild(div);
     })
+}
+
+//show detail button handler
+const loadPhoneDetail = phoneId => {
+    const url = `https://openapi.programming-hero.com/api/phone/${phoneId}`;
+    fetch(url)
+        .then(res => res.json())
+        .then(data => displayPhoneDetail(data.data));
+}
+
+// display phone detail
+const displayPhoneDetail = phone => {
+    console.log(phone);
 }
