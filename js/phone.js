@@ -39,4 +39,17 @@ const loadPhoneDetail = phoneId => {
 // display phone detail
 const displayPhoneDetail = phone => {
     console.log(phone);
+    const phoneDetails = document.getElementById('phone-details');
+    const div = document.createElement('div');
+    div.classList.add('card');
+    div.innerHTML = `
+        <img src="${phone.image}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">${phone.name}</h5>
+            <h6>${phone.brand}</h6>
+            
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+    `;
+    phoneDetails.appendChild(div);
 }
