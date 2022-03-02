@@ -1,9 +1,20 @@
+//function to set the display of spinner
+const toggleSpinner = displayStyle => {
+    document.getElementById('spinner').style.visibility = displayStyle;
+}
+const toggleSearchResult = displayStyle => {
+    document.getElementById('search-result').style.visibility = displayStyle;
+}
+
 //search button handler
 const searchPhone = () => {
     const searchField = document.getElementById('search-field');
     const searchText = searchField.value;
     //clear search field
     searchField.value = '';
+    //show spinner
+    toggleSpinner('visible');
+    toggleSearchResult('hidden');
     //load data
     const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
     fetch(url)
@@ -25,6 +36,8 @@ const displaySearchResult = phones => {
         <p class="text-center fw-bold">No phone was found. Try searching again.</p>
         `;
         searchResult.appendChild(div);
+        toggleSpinner('hidden');
+        toggleSearchResult('visible');
     }
     else {
         phones.forEach(phone => {
@@ -40,6 +53,8 @@ const displaySearchResult = phones => {
                 </div>
             </div>`;
             searchResult.appendChild(div);
+            toggleSpinner('hidden');
+            toggleSearchResult('visible');
         })
     }
 }
@@ -64,15 +79,25 @@ const displayPhoneDetail = phone => {
         <div class="card-body">
             <h5 class="card-title">${phone.name}</h5>
             <h6>${phone.brand}</h6>
-            <p>${phone.releaseDate}</p>
+            <p>${phone.releaseDate ? phone.releaseDate : 'No release date found'}</p>
             <h6>Main Features</h6>
             <li>Chip Set: ${phone.mainFeatures.chipSet}</li>            
             <li>Display Size: ${phone.mainFeatures.displaySize}</li>            
             <li>Memory: ${phone.mainFeatures.memory}</li>
             <li>Storage: ${phone.mainFeatures.storage}</li>
             <li>Sensors: ${phone.mainFeatures.sensors}</li>
-
         </div>
     `;
+    if (!phone.others) {
+        div.innerHTML.add += `<p> </p>`;
+    }
+    else {
+        div.innerHTML += `<h6>Others</h6>`;
+        for (const [key, value] of Object.entries(phone.others)) {
+            div.innerHTML += ` 
+                <li>${key}: ${value}</li>
+            `;
+        }
+    }
     phoneDetails.appendChild(div);
 }
