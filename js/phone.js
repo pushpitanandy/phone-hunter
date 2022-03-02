@@ -24,12 +24,13 @@ const searchPhone = () => {
 
 // display phone search results
 const displaySearchResult = phones => {
+    //clear the space
     const searchResult = document.getElementById('search-result');
     searchResult.textContent = '';
+    const phoneDetails = document.getElementById('phone-details');
+    phoneDetails.textContent = '';
     //check if phones have been found or not
     if (phones.length == 0) {
-        const phoneDetails = document.getElementById('phone-details');
-        phoneDetails.textContent = '';
         const div = document.createElement('div');
         div.classList.add('col');
         div.innerHTML = `
@@ -40,7 +41,8 @@ const displaySearchResult = phones => {
         toggleSearchResult('visible');
     }
     else {
-        phones.forEach(phone => {
+        const slicedPhones = phones.slice(0, 20);
+        slicedPhones.forEach(phone => {
             const div = document.createElement('div');
             div.classList.add('col');
             div.innerHTML = `
@@ -69,7 +71,6 @@ const loadPhoneDetail = phoneId => {
 
 // display phone detail
 const displayPhoneDetail = phone => {
-    console.log(phone);
     const phoneDetails = document.getElementById('phone-details');
     phoneDetails.textContent = '';
     const div = document.createElement('div');
