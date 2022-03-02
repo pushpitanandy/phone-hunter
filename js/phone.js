@@ -15,20 +15,33 @@ const searchPhone = () => {
 const displaySearchResult = phones => {
     const searchResult = document.getElementById('search-result');
     searchResult.textContent = '';
-    phones.forEach(phone => {
+    //check if phones have been found or not
+    if (phones.length == 0) {
+        const phoneDetails = document.getElementById('phone-details');
+        phoneDetails.textContent = '';
         const div = document.createElement('div');
         div.classList.add('col');
         div.innerHTML = `
-        <div class="card h-100">
-            <img src="${phone.image}" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">${phone.phone_name}</h5>
-                <h6>${phone.brand}</h6>
-                <button onclick="loadPhoneDetail('${phone.slug}')" class="bg-success text-white p-2">Show Details</button>
-            </div>
-        </div>`;
+        <p class="text-center fw-bold">No phone was found. Try searching again.</p>
+        `;
         searchResult.appendChild(div);
-    })
+    }
+    else {
+        phones.forEach(phone => {
+            const div = document.createElement('div');
+            div.classList.add('col');
+            div.innerHTML = `
+            <div class="card h-100">
+                <img src="${phone.image}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">${phone.phone_name}</h5>
+                    <h6>${phone.brand}</h6>
+                    <button onclick="loadPhoneDetail('${phone.slug}')" class="bg-success text-white p-2">Show Details</button>
+                </div>
+            </div>`;
+            searchResult.appendChild(div);
+        })
+    }
 }
 
 //show detail button handler
